@@ -33,10 +33,12 @@ const app = {
     let mapStrains = Vue.computed(() => Object.entries(data.tokens.mapStrains || {}));
     let isMania = Vue.computed(() => getToken('gameMode') === 'OsuMania');
     let hasMods = Vue.computed(() => getToken('mods') !== 'None');
-    let isPlaying = Vue.computed(() => getToken('playerHp', 2) > 0);
+    let isPlaying = Vue.computed(() => getToken('username') !== '');
     let isPlayingOrWatching = Vue.computed(() =>
       _IsInStatus(data.rws, data.tokens, [window.overlay.osuStatus.Playing, window.overlay.osuStatus.ResultsScreen, window.overlay.osuStatus.Watching])
     );
+    let starsNoMod = Vue.computed(() => getToken('starsNomod',2));
+    let starsWithMods = Vue.computed(() => getToken('mStars',2));
 
     let ppValue = Vue.computed(() => {
       if (isPlayingOrWatching.value) return getToken('ppIfMapEndsNow', 1);
@@ -53,8 +55,10 @@ const app = {
       isPlayingOrWatching,
       isMania,
       mapStrains,
+      starsNoMod,
+      starsWithMods,
       ppValue,
-      mapProgress,
+      mapProgress
     };
   },
   computed: {
@@ -100,7 +104,7 @@ const app = {
 
       let { ppBackgroundColor: pp, hit100BackgroundColor: h100, hit50BackgroundColor: h50, hitMissBackgroundColor: hMiss } = this.overlaySettings;
       return `background: linear-gradient(to right, ${pp},${pp},${h100},${h100},${h50},${h50},${hMiss},${hMiss});`;
-    },
+    }
   },
 };
 export default app;

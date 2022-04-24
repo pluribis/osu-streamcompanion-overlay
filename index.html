@@ -16,79 +16,70 @@
 
   <body class="body">
     <div id="app" class="app" v-cloak>
-      <div class="info-panel" v-if="isPlaying">
+      <div class="map-info-panel" v-if="isPlaying">
+        <p class="title">{{getToken('artistRoman')}}</p>
+        <h1 class="title">{{getToken('titleRoman')}}</h1>
+        <div class="map-info">
+          <p class="mapper info">mapper <strong> {{getToken('creator')}}</strong></p>
+        </div>
         <Background :dimcolor="overlaySettings.imageDimColor" class="box">
           <div class="inner" :class="{hide: overlaySettings.hideDiffText}">
-            <p class="title">{{getToken('artistRoman')}}</p>
-            <h1 class="title">{{getToken('titleRoman')}}</h1>
-
-            <div class="mapinfo">
-              <p class="mapper info">mapper <strong> {{getToken('creator')}}</strong></p>
-            </div>
-            <div class="mapinfo">
-              <p class="difficulty info">difficulty <strong> ⭐ {{getToken('mStars', 2)}} </strong></p>
-            </div>
-            <div class="mapinfo">
-              <p class="difficulty info"><strong> {{getToken('diffName')}} </strong></p>
-            </div>
-            <div class="mapinfo" v-if="hasMods">
-              <p class="difficulty info"> <strong> +{{getToken('mods')}} ⭐ {{getToken('mStars', 2)}}</strong></p>
-            </div>
-            <div class="mapinfo">
-              <p class="difficulty info"> BPM <strong>{{getToken('currentBpm')}}</strong></p>
-            </div>
           </div>
         </Background>
-
-        <div class="flexSpacer flexEnd" style="width: 100%">
-          <div class="flexSpacer flexEnd" style="width: 100%">
-            <div class="mapStats" :class="{hide: overlaySettings.hideMapStats}">
-              <div><strong>CS {{getToken('mCS')}}</strong></div>
-              <div><strong>AR {{getToken('mAR')}}</strong></div>
-              <div><strong>OD {{getToken('mOD')}}</strong></div>
-              <div><strong>HP {{getToken('mHP')}}</strong></div>
-            </div>
+        <div class="map-info-row" :class="{hide: overlaySettings.hideMapStats}">
+          <div class="map-info">
+            <p class="difficulty-info value-capsule"> <strong>⭐ {{starsNoMod}} {{getToken('diffName')}}</strong></p>
           </div>
         </div>
-        <div class="bottom ds">
-          <div class="bottom-background"></div>
-
-          <div v-if="isMania" class="hits" :style="hitsStyle">
-            <div class="hit hit-p300" v-if="isMania">{{getToken('geki')}}</div>
-            <div class="hit hit-300" v-if="isMania">{{getToken('c300')}}</div>
-            <div class="hit hit-200" v-if="isMania">{{getToken('katsu')}}</div>
-            <div class="hit hit-100">
-              <p class="hit-text">{{getToken('c100')}}</p>
-            </div>
-            <div class="hit hit-50">
-              <p class="hit-text">{{getToken('c50')}}</p>
-            </div>
-            <div class="hit hit-miss">
-              <p class="hit-text">{{getToken('miss')}}</p>
-            </div>
-          </div>
-          <div v-else class="hits" :style="hitsStyle">
-            <div class="hit hit-100">
-              <p class="hit-text">{{getToken('c100')}}</p>
-            </div>
-            <div class="hit hit-50">
-              <p class="hit-text">{{getToken('c50')}}</p>
-            </div>
-            <div class="hit hit-miss">
-              <p class="hit-text">{{getToken('miss')}}</p>
-            </div>
+        <div class="map-info-row">
+          <div class="map-info" v-if="hasMods && starsNoMod !== starsWithMods">
+            <p class="difficulty-info value-capsule"> <strong> +{{getToken('mods')}} ⭐ {{starsWithMods}}</strong></p>
           </div>
         </div>
-        <div class="ppStats" :class="{hide: overlaySettings.hideMapStats}">
-          <div class="ds hit pp current">{{ppValue}}pp</div>
-          <div class="ds hit pp">{{getToken('ppIfRestFced')}}pp</div>
+        <div class="map-info-row" :class="{hide: overlaySettings.hideMapStats}">
+          <div class="map-info"><strong>BPM {{getToken('currentBpm', 2)}}</strong></div>
         </div>
-        <div class="comboStats" :class="{hide: overlaySettings.hideMapStats}">
-          <div class="ds hit combo current"><strong>{{getToken('combo')}}x</strong></div>
-          <div class="ds hit combo"><strong>{{getToken('maxCombo')}}x</strong></div>
+        <div class="map-info-row">
+          <div class="map-stats value-capsule" :class="{hide: overlaySettings.hideMapStats}">
+            <div><strong>CS {{getToken('mCS')}}</strong></div>
+            <div><strong>AR {{getToken('mAR')}}</strong></div>
+            <div><strong>OD {{getToken('mOD')}}</strong></div>
+            <div><strong>HP {{getToken('mHP')}}</strong></div>
+          </div>
         </div>
       </div>
-
+      <div class="score-info-panel" v-if="isPlaying">
+        <div class="pp-stats" :class="{hide: overlaySettings.hideMapStats}">
+          <div class="current">{{ppValue}}pp</div>
+          <div>{{getToken('noChokePp',0)}}pp if FC</div>
+        </div>
+        <table class="hit-stats">
+          <tr>
+            <td style="color: lightskyblue;"><strong>PERFECT</strong></td>
+            <td class="hit">{{getToken('c300')}}</td>
+          </tr>
+          <tr>
+            <td style="color: lightgreen;"><strong>GOOD</strong></td>
+            <td class="hit">{{getToken('c100')}}</td></tr>
+          <tr>
+            <td style="color: lightblue;">BAD</td>
+            <td class="hit">{{getToken('c50')}}</td>
+          </tr>
+          <tr>
+            <td style="color: lightseagreen;">SLIDERBREAK</td>
+            <td class="hit">{{getToken('sliderBreaks')}}</td>
+          </tr>
+          <tr>
+            <td style="color: #EE4B2B;">MISS</td>
+            <td class="hit">{{getToken('miss')}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="ss-info-panel"  v-if="!isPlaying">
+        <div :class="{hide: overlaySettings.hideMapStats}">
+          <div>SS: {{getToken('osu_mSSPP',0)}}pp</div>
+        </div>
+      </div>
     </div>
     <script src="./main.js" type="module"></script>
   </body>
