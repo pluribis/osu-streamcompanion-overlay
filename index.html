@@ -23,17 +23,16 @@
           <p class="mapper info">mapper <strong> {{getToken('creator')}}</strong></p>
         </div>
         <Background :dimcolor="overlaySettings.imageDimColor" class="box">
-          <div class="inner" :class="{hide: overlaySettings.hideDiffText}">
+          <div class="map-info-row">
+            <div class="difficulty-info">
+              <p class="value-capsule" :style="{'background-color': diffIconColor, 'color': diffNameColor, 'font-weight': 'boldest'}"> 
+                <strong>⭐ {{starsNoMod}} {{getToken('diffName')}}</strong></p>
+            </div>
           </div>
         </Background>
-        <div class="map-info-row" :class="{hide: overlaySettings.hideMapStats}">
-          <div class="map-info">
-            <p class="difficulty-info value-capsule"> <strong>⭐ {{starsNoMod}} {{getToken('diffName')}}</strong></p>
-          </div>
-        </div>
         <div class="map-info-row">
-          <div class="map-info" v-if="hasMods && starsNoMod !== starsWithMods">
-            <p class="difficulty-info value-capsule"> <strong> +{{getToken('mods')}} ⭐ {{starsWithMods}}</strong></p>
+          <div class="map-info" >
+            <p v-if="hasMods"><strong> +{{getToken('mods')}} <strong><strong v-if="starsNoMod !== starsWithMods"> ⭐ {{starsWithMods}}</strong></p>
           </div>
         </div>
         <div class="map-info-row" :class="{hide: overlaySettings.hideMapStats}">
@@ -51,7 +50,7 @@
       <div class="score-info-panel" v-if="isPlaying">
         <div class="pp-stats" :class="{hide: overlaySettings.hideMapStats}">
           <div class="current">{{ppValue}}pp</div>
-          <div>{{getToken('noChokePp',0)}}pp if FC</div>
+          <div v-if="missCount > 0 || sliderBreakCount > 0">{{getToken('noChokePp',0)}}pp if FC</div>
         </div>
         <table class="hit-stats">
           <tr>
@@ -67,18 +66,39 @@
           </tr>
           <tr>
             <td style="color: lightseagreen;">SLIDERBREAK</td>
-            <td class="hit">{{getToken('sliderBreaks')}}</td>
+            <td class="hit">{{sliderBreakCount}}</td>
           </tr>
           <tr>
             <td style="color: #EE4B2B;">MISS</td>
-            <td class="hit">{{getToken('miss')}}</td>
+            <td class="hit">{{missCount}}</td>
           </tr>
         </table>
       </div>
-      <div class="ss-info-panel"  v-if="!isPlaying">
-        <div :class="{hide: overlaySettings.hideMapStats}">
-          <div>SS: {{getToken('osu_mSSPP',0)}}pp</div>
-        </div>
+      <div class="fc-pp-info-panel"  v-if="!isPlaying">
+        <table >
+          <tr >
+            <td class="fc-info-label">Acc</td>
+            <td class="fc-info-label hit">PP if FC</td>
+          </tr>
+          <tr>
+            <td><strong>SS</strong></td>
+            <td class="hit">{{getToken('osu_mSSPP', 0)}}pp</td>
+          </tr>
+          <tr>
+            <td><strong>99%</strong></td>
+            <td class="hit">{{getToken('osu_m99PP', 0)}}pp</td></tr>
+          <tr>
+            <td>98%</td>
+            <td class="hit">{{getToken('osu_m98PP', 0)}}pp</td>
+          </tr>
+          <tr>
+            <td>97%</td>
+            <td class="hit">{{getToken('osu_m97PP', 0)}}pp</td>
+          </tr>
+          <tr>
+            <td>96%</td>
+            <td class="hit">{{getToken('osu_m96PP', 0)}}pp</td>
+          </tr>
       </div>
     </div>
     <script src="./main.js" type="module"></script>

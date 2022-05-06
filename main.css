@@ -11,7 +11,6 @@
 }
 .box {
     height: 18vh;
-
     -webkit-box-shadow: inset 0px 0px 28px 4px #0008;
     -moz-box-shadow: inset 0px 0px 28px 4px #0008;
     box-shadow: inset 0px 0px 28px 4px #0008;
@@ -23,11 +22,24 @@
     background-size: cover;
     transition: padding var(--animation-speed) ease;
     overflow-y: hidden;
-    
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
+    justify-content: flex-end;
 }
+
+.difficulty-info {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    padding:  5px;
+    text-align: center;
+    font-weight: bold;
+ }
+
 
 .app {
     height: 100vh;
@@ -43,7 +55,7 @@
     display: flex;
     flex-direction: column;
     background-color: rgba(50,50,50,.9);
-    height: 40vh;
+    max-height: 40vh;
     border-radius: 10px;
     border-color: rgba(255,255,255,.9);
     border-width: 3px;
@@ -53,14 +65,15 @@
 
 .map-info-row { 
     margin-top: 10px;
-    margin-left:20px;
-    margin-right: 20px;
+    margin-left:10px;
+    margin-right: 10px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
 .map-info {
     font-size: 18px;
+    padding: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-direction: row;
@@ -71,11 +84,6 @@
     transition: margin-top var(--animation-speed) ease,
                 padding var(--animation-speed) ease;
 }
-
-.difficulty-info { 
-    padding:  5px;
-    justify-content: center;
- }
 
 
 .map-stats {
@@ -99,14 +107,14 @@
     margin-right: 10px;
 }
 
-.ss-info-panel { 
+.fc-pp-info-panel { 
+    width:  10vw;
     background-color: rgba(50,50,50,1);
     border-radius: 10px;
     border-color: rgba(255,255,255,.99);
     border-style:  solid;
     border-width: 3px;
     margin-top:  10vh;
-    height: 35px;
     padding: 20px;
     margin-right: 10px;
     font-size: 25px;
@@ -114,10 +122,17 @@
     right: 0;
 }
 
+.fc-info-label { 
+    border-bottom-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-radius: 0px;
+ }
+
 
 .value-capsule {
     border-radius: 15px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.8);
     background-repeat: no-repeat;
     background-position: center center;
     -webkit-background-size: cover;
@@ -169,9 +184,6 @@
                 padding var(--animation-speed) ease,
                 opacity var(--animation-speed) ease;
 }
-.difficulty{
-    transition: padding var(--animation-speed) ease;
-}
 .mapinfo-playing > .difficulty{
     padding-right:5px;
     transition: padding var(--animation-speed) ease;
@@ -190,8 +202,6 @@
     align-self: right;
     justify-content: right;
     padding: 5px 9px;
-    margin-right: 10px;
-    border-radius: 200px;
 }
 
 [v-cloak] { display: none; }
@@ -240,10 +250,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-}
-
-.mapStats strong{
-    float: left;
 }
 
 .chart-container{
